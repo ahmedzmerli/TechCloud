@@ -1,0 +1,37 @@
+<app-navbar-back></app-navbar-back>
+<app-sidebar-back></app-sidebar-back>
+<div class="content">
+
+    <div class="col-sm-12 col-xl-6" style="width: 100%; margin-top: 30px;">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Ajouter un événement</h6>
+
+            <form [formGroup]="postEvenementForm">
+            <div class="form-group">
+                <label for="nom">nom:</label>
+                <input type="text" class="form-control" name="nom" id="nom" required formControlName="nom">
+            </div>
+            <div class="form-group">
+                <label for="nbrPlace">Nombre de place:</label>
+                <input type="number" class="form-control" name="nbrPlace" id="nbrPlace" required formControlName="nbrPlace">
+            </div>
+            <div class="form-group">
+                <label for="date_deb">Date de début:</label>
+                <input type="date" class="form-control"name="date_deb" id="date_deb" required formControlName="date_deb">
+            </div>
+           
+            <div class="form-group">
+                <label for="date_fin">Date de fin:</label>
+                <input type="date" class="form-control"name="date_fin" id="date_fin" required formControlName="date_fin">
+            </div>
+
+            <div class="form-group">
+                <label for="lieu">lieu:</label>
+                <input type="text" class="form-control" name="lieu" id="lieu" required formControlName="lieu">
+            </div>
+            <button class="btn btn-primary"type="submit" (click)="postEvenement()" style="margin-top: 20px;"> Ajouter </button>
+        </form>
+        </div>
+    </div>
+    </div>
+<app-footer></app-footer>
