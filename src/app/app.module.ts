@@ -14,6 +14,12 @@ import { EvenementService } from './back/service/evenement.service';
 import { PostEvenementComponent } from './back/post-evenement/post-evenement.component';
 import { UpdateEvenementComponent } from './back/update-evenement/update-evenement.component';
 import { DetailEvenementComponent } from './back/detail-evenement/detail-evenement.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { HeaderFrontComponent } from './front/header-front/header-front.component';
+import { FooterFrontComponent } from './front/footer-front/footer-front.component';
+import { SliderFrontComponent } from './front/slider-front/slider-front.component';
+import { EvenementFrontComponent } from './front/evenement-front/evenement-front.component';
+
 
 
 @NgModule({
@@ -27,6 +33,10 @@ import { DetailEvenementComponent } from './back/detail-evenement/detail-eveneme
     PostEvenementComponent,
     UpdateEvenementComponent,
     DetailEvenementComponent,
+    HeaderFrontComponent,
+    FooterFrontComponent,
+    SliderFrontComponent,
+    EvenementFrontComponent,
    
   ],
   imports: [
@@ -35,6 +45,7 @@ import { DetailEvenementComponent } from './back/detail-evenement/detail-eveneme
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MatDialogModule,
    
   ],
   providers: [HttpClient,EvenementService ],

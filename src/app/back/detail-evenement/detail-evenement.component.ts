@@ -9,10 +9,9 @@ import { EvenementService } from '../service/evenement.service';
 })
 export class DetailEvenementComponent {
   commentaires: any[] = []; // Array to store retrieved comments
-  evenementService: any;
   @Input() evenement: any;
   
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private evenementService:EvenementService) {}
 
   ngOnInit(): void {
     // Get the evenement ID from the route parameters

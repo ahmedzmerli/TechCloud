@@ -1,34 +1,154 @@
 <app-navbar-back></app-navbar-back>
 <app-sidebar-back></app-sidebar-back>
+
+
 <div class="content">
-<table class="table table-hover">
+
+  <!-- Assuming this is your component.html file -->
+<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+  <h5 class="m-0">Manage Files</h5>
+  <span class="block mt-2 md:mt-0 p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input pInputText type="text" [(ngModel)]="searchTerm" (input)="searchEvent()" placeholder="Search..." class="w-full sm:w-auto" />
+  </span>
+</div>
+
+  <table class="table table-hover">
     <thead>
       <tr>
-        
+
         <th scope="col">Nom</th>
         <th scope="col">Nombre de place</th>
         <th scope="col">Date de début</th>
         <th scope="col">Lieu</th>
         <th scope="col">Actions</th>
-    
+
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let evenement of evenementss">
-            <td>{{evenement.nom}}</td>
-            <td>{{evenement.nbrPlace}}</td>
-            <td>{{evenement.date_deb}}</td>
-            <td>{{evenement.lieu}}</td>
-            <td>
-            <button class="btn-update" routerLink="/evenement/{{evenement.id}}">Modifier</button>
-            <button class="btn-delete" (click)="deleteEvenement(evenement.id)" >Supprimer</button>
-            
-            <button class="btn-detail" (click)="detailEvenement(evenement.id)" routerLink="/detailEvenement/{{evenement.id}}" >Détail</button>
-          </td>
-          </tr>
-     
-      
+
+      <tr *ngFor="let evenement of evenementss">
+        <td>{{evenement.nom}}</td>
+        <td>{{evenement.nbrPlace}}</td>
+        <td>{{evenement.date_deb}}</td>
+        <td>{{evenement.lieu}}</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="openDialog(evenement)">
+            Ajouter
+         </button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="openDialog(evenement)">
+           Modifier
+        </button>
+       
+          <button class="btn-delete" (click)="deleteEvenement(evenement.id)">Supprimer</button>
+
+          <button class="btn-detail" (click)="detailEvenement(evenement.id)"
+            routerLink="/detailEvenement/{{evenement.id}}">Détail</button>
+
+
+        </td>
+      </tr>
+
+
     </tbody>
   </table>
+  
+  
 </div>
-  <app-footer></app-footer>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="exampleModal2Label">Modification Form</h5>
+        
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateEvenementForm" (ngSubmit)="onSubmit()" >
+          <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Modifer cet événement</h6>
+
+            
+            <div class="form-group">
+                <label for="nom">nom:</label>
+                <input type="text" class="form-control" name="nom" id="nom" required formControlName="nom" placeholder={{nom}} >
+            </div>
+            <div class="form-group">
+                <label for="nbrPlace">Nombre de place:</label>
+                <input type="number" class="form-control" name="nbrPlace" id="nbrPlace" required formControlName="nbrPlace" placeholder={{nbrPlace}}>
+            </div>
+            <div class="form-group">
+                <label for="date_deb">Date de début:</label>
+                <input type="date" class="form-control"name="date_deb" id="date_deb" required formControlName="date_deb" placeholder={{date_deb}}>
+            </div>
+           
+            <div class="form-group">
+                <label for="lieu">lieu:</label>
+                <input type="text" class="form-control" name="lieu" id="lieu" required formControlName="lieu" placeholder={{lieu}}>
+            </div>
+            
+       
+        </div>
+          <button type="submit" class="btn btn-primary" (click)="updateEvenement()">Modifier</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Modal AJOUT -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModal1Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="exampleModal1Label">Ajout Form</h5>
+        
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="postEvenementForm" (ngSubmit)="onSubmitAjout()" >
+          <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Modifer cet événement</h6>
+
+            
+            <div class="form-group">
+                <label for="nom">nom:</label>
+                <input type="text" class="form-control" name="nom" id="nom" required formControlName="nom" >
+            </div>
+            <div class="form-group">
+                <label for="nbrPlace">Nombre de place:</label>
+                <input type="number" class="form-control" name="nbrPlace" id="nbrPlace" required formControlName="nbrPlace" >
+            </div>
+            <div class="form-group">
+                <label for="date_deb">Date de début:</label>
+                <input type="date" class="form-control"name="date_deb" id="date_deb" required formControlName="date_deb">
+            </div>
+           
+            <div class="form-group">
+                <label for="lieu">lieu:</label>
+                <input type="text" class="form-control" name="lieu" id="lieu" required formControlName="lieu" >
+            </div>
+            
+       
+        </div>
+          <button type="submit" class="btn btn-primary" (click)="postEvenement()">Ajouter</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
