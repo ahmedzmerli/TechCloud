@@ -1,0 +1,44 @@
+<app-navbar-back></app-navbar-back>
+<app-sidebar-back></app-sidebar-back>
+
+<div class="content">
+    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <h5 class="m-0">Manage Module Formations</h5>
+        <span class="block mt-2 md:mt-0 p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <form (ngSubmit)="searchModuleFormations(titre)">
+                <input type="text" [(ngModel)]="titre" name="titre" placeholder="Enter title">
+            </form>
+        </span>
+    </div>
+    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <a routerLink="/moduleformation/add-moduleformation" class="btn btn-outline-primary"><i class="far fa-file-alt"></i> Add</a>
+    </div>
+    <!-- Afficher les détails de chaque module formation dans un tableau -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Formation</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let moduleFormation of moduleformations">
+                <td>{{ moduleFormation.moduleFormation?.titre || 'Intro' }}</td>
+                <td>{{ moduleFormation.moduleFormation?.description || 'Introduction to Angular basics' }}</td>
+                <td>{{ moduleFormation.formation }}</td>
+                <td>
+                    <button type="button" [routerLink]="'/moduleformation/update-moduleformation/' + moduleFormation.moduleFormation.id" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" [routerLink]="'/moduleformation/delete-moduleformation/' + moduleFormation.moduleFormation.id" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        <i class="fas fa-trash-alt"></i> Delete 
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<app-footer></app-footer>

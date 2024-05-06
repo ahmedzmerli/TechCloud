@@ -1,0 +1,56 @@
+<div class="container">
+    <h2 class="mb-4">Update Formation</h2>
+    <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+    <form [formGroup]="formationForm" (ngSubmit)="updateFormation()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="titre">Titre</label>
+                    <input type="text" class="form-control" id="titre" formControlName="titre">
+                    <div *ngIf="formationForm.get('titre')?.invalid && (formationForm.get('titre')?.dirty || formationForm.get('titre')?.touched)" class="text-danger">
+                        <div *ngIf="formationForm.get('titre')?.errors?.['required']">Le titre est requis.</div>
+                        <div *ngIf="formationForm.get('titre')?.errors?.['maxlength']">Le titre ne peut pas dépasser 10 caractères.</div>
+                        <div *ngIf="formationForm.get('titre')?.errors?.['pattern']">Le titre ne peut contenir que des lettres.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" formControlName="description">
+                    <div *ngIf="formationForm.get('description')?.invalid && (formationForm.get('description')?.dirty || formationForm.get('description')?.touched)" class="text-danger">
+                         <div *ngIf="formationForm.get('description')?.errors?.['required']">La description est requis.</div>
+                         <div *ngIf="formationForm.get('description')?.errors?.['maxlength']">La description ne peut pas dépasser 10 caractères.</div>
+                         <div *ngIf="formationForm.get('description')?.errors?.['pattern']">La description ne peut contenir que des lettres.</div>
+                        </div>
+                </div>
+            
+                <div class="form-group">
+                    <label for="dateDebut">Date de début</label>
+                    <input type="date" class="form-control" id="dateDebut" formControlName="dateDebut">
+                    <div *ngIf="formationForm.get('dateDebut')?.invalid && (formationForm.get('dateDebut')?.dirty || formationForm.get('dateDebut')?.touched)" class="text-danger">
+                    <div *ngIf="isFieldInvalid('dateDebut')" class="text-danger">La date de début est requise.</div>
+                        <div *ngIf="formationForm.get('dateDebut')?.errors?.['required']">La date de début est requise.</div>
+                        <div *ngIf="formationForm.get('dateDebut')?.errors?.['pastOrPresent']">La date de début doit être dans le passé ou le présent.</div>
+                </div>
+            </div>
+                <div class="form-group">
+                    <label for="dateFin">Date de fin</label>
+                    <input type="date" class="form-control" id="dateFin" formControlName="dateFin">
+                    <div *ngIf="formationForm.get('dateFin')?.invalid && (formationForm.get('dateFin')?.dirty || formationForm.get('dateFin')?.touched)" class="text-danger">
+                    <div *ngIf="isFieldInvalid('dateFin')" class="text-danger">La date de fin est requise.</div>
+                    <div *ngIf="formationForm.get('dateFin')?.errors?.['required']">La date de fin est requise.</div>
+                    <div *ngIf="formationForm.get('dateFin')?.errors?.['futureOrPresent']">La date de fin doit être dans le passé ou le présent.</div>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/formation/all">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

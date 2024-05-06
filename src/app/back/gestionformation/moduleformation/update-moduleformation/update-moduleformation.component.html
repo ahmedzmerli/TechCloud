@@ -1,0 +1,40 @@
+<div class="container">
+    <h2 class="mb-4">Add ModuleFormation</h2>
+    <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+    <form [formGroup]="moduleFormationForm" (ngSubmit)="updateModuleFormation()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="titre">Title</label>
+                    <input type="text" class="form-control" id="titre" formControlName="titre">
+                    <div *ngIf="moduleFormationForm.get('titre')?.invalid && (moduleFormationForm.get('titre')?.dirty || moduleFormationForm.get('titre')?.touched)" class="text-danger">
+                        <div *ngIf="moduleFormationForm.get('titre')?.errors?.['required']">Le titre est requis.</div>
+                        <div *ngIf="moduleFormationForm.get('titre')?.errors?.['maxlength']">Le titre ne peut pas dépasser 10 caractères.</div>
+                        <div *ngIf="moduleFormationForm.get('titre')?.errors?.['pattern']">Le titre ne peut contenir que des lettres.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" formControlName="description">
+                    <div *ngIf="moduleFormationForm.get('description')?.invalid && (moduleFormationForm.get('description')?.dirty || moduleFormationForm.get('description')?.touched)" class="text-danger">
+                        <div *ngIf="moduleFormationForm.get('description')?.errors?.['required']">La description est requis.</div>
+                        <div *ngIf="moduleFormationForm.get('description')?.errors?.['maxlength']">La description ne peut pas dépasser 10 caractères.</div>
+                        <div *ngIf="moduleFormationForm.get('description')?.errors?.['pattern']">La description ne peut contenir que des lettres.</div>
+                       </div>
+                </div>
+                
+            </div>
+                
+            
+            <!-- Ajouter le reste de vos champs de formulaire ici -->
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/moduleformation/all-moduleformation">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

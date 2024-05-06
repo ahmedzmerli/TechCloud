@@ -1,0 +1,57 @@
+<div class="container">
+    <h2 class="mb-4">Add Formation</h2>
+    <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+    <form [formGroup]="formationForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="titre">Title</label>
+                    <input type="text" class="form-control" id="titre" formControlName="titre">
+                    <div *ngIf="formationForm.get('titre')?.invalid && (formationForm.get('titre')?.dirty || formationForm.get('titre')?.touched)" class="text-danger">
+                        <div *ngIf="formationForm.get('titre')?.errors?.['required']">Title required.</div>
+                        <div *ngIf="formationForm.get('titre')?.errors?.['maxlength']">max 10 caractères.</div>
+                        <div *ngIf="formationForm.get('titre')?.errors?.['pattern']">Title can only contain letters.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" formControlName="description">
+                    <div *ngIf="formationForm.get('description')?.invalid && (formationForm.get('description')?.dirty || formationForm.get('description')?.touched)" class="text-danger">
+                        <div *ngIf="formationForm.get('description')?.errors?.['required']"> description required.</div>
+                        <div *ngIf="formationForm.get('description')?.errors?.['maxlength']">max 10 caractères.</div>
+                        <div *ngIf="formationForm.get('description')?.errors?.['pattern']"> description can only contain letters.</div>
+                       </div>
+                </div>
+                <div class="form-group">
+                    <label for="dateDebut">Start Date</label>
+                    <input type="date" class="form-control" id="dateDebut" formControlName="dateDebut">
+                    <div *ngIf="formationForm.get('dateDebut')?.invalid && (formationForm.get('dateDebut')?.dirty || formationForm.get('dateDebut')?.touched)" class="text-danger">
+                        <div *ngIf="isFieldInvalid('dateDebut')" class="text-danger">Start Date required.</div>
+                            <div *ngIf="formationForm.get('dateDebut')?.errors?.['required']">Start Date required..</div>
+                            <div *ngIf="formationForm.get('dateDebut')?.errors?.['pastOrPresent']">Start Date  must be in the past or present.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dateFin">End Date</label>
+                    <input type="date" class="form-control" id="dateFin" formControlName="dateFin">
+                    <div *ngIf="formationForm.get('dateFin')?.invalid && (formationForm.get('dateFin')?.dirty || formationForm.get('dateFin')?.touched)" class="text-danger">
+                        <div *ngIf="isFieldInvalid('dateFin')" class="text-danger">End Date est required.</div>
+                        <div *ngIf="formationForm.get('dateFin')?.errors?.['required']">End Date est required.</div>
+                        <div *ngIf="formationForm.get('dateFin')?.errors?.['futureOrPresent']">End Date  must be in the futur.</div>
+                    </div>
+                </div>
+            </div>
+                
+            
+            <!-- Ajouter le reste de vos champs de formulaire ici -->
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/formation/all">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Delete moduleFormation</h2>
+    <p>Are you sure you want to delete the following moduleFormation?</p>
+    
+    <div *ngIf="moduleFormation">
+      <p><strong>Title: </strong>{{ moduleFormation.titre }}</p>
+      <p><strong>Description: </strong>{{ moduleFormation.description }}</p>
+    </div>
+    <form action="#" th:action="@{'/moduleformation/delete-moduleformation/' + ${moduleFormation.id}}" method="post" (ngSubmit)="confirmDelete()" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="id" th:value="${moduleFormation.id}" />
+    <button type="submit" class="btn btn-primary btn-submit">delete</button>
+    <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/moduleformation/all-moduleformation">Cancel</button>
+</form>
+  </div>

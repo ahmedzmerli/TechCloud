@@ -1,0 +1,41 @@
+<app-navbar-back></app-navbar-back>
+<app-sidebar-back></app-sidebar-back>
+
+<div class="content">
+  
+    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <a routerLink="/certificat/add-certificat" class="btn btn-outline-primary"><i class="far fa-file-alt"></i> Add</a>
+        <a routerLink="/certificat/piechart" class="btn btn-outline-primary">View Statistics</a>
+    </div>
+    <!-- Afficher les détails de chaque certificat dans un tableau -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Module Formation</th>
+                <th scope="col">User</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let certificat of certificats">
+                <td>{{ certificat.certificat.dateDelivrance }}</td>
+                <td>{{ certificat.moduleFormation }}</td>
+                <td>{{ certificat.user }}</td>
+                <td>{{ certificat.certificat.description }}</td>
+                <td>{{ certificat.certificat.statut }}</td>
+                <td>
+                    <button type="button" [routerLink]="'/certificat/update-certificat/' + certificat.certificat.id" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" [routerLink]="'/certificat/delete-certificat/' + certificat.certificat.id" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<app-footer></app-footer>

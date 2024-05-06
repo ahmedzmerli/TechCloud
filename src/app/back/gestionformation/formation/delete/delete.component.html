@@ -1,0 +1,15 @@
+<div class="container">
+    <h2>Delete Formation</h2>
+    <p>Are you sure you want to delete the following Formation?</p>
+    
+    <div *ngIf="formation">
+      <p><strong>Title: </strong>{{ formation.titre }}</p>
+      <p><strong>Description: </strong>{{ formation.description }}</p>
+    </div>
+    <form action="#" th:action="@{'/formation/deleteFormation/' + ${formation.id}}" method="post" (ngSubmit)="confirmDelete()" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="id" th:value="${formation.id}" />
+    <button type="submit" class="btn btn-primary btn-submit">delete</button>
+    <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/formation/all">Cancel</button>
+</form>
+  </div>
+  

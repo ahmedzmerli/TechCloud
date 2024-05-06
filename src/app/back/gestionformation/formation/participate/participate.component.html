@@ -1,0 +1,50 @@
+<header>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/front">Return</button>
+    </div>
+ </header>
+ <main>
+     <!-- Vérifier s'il y a des formations disponibles -->
+     <section *ngIf="formations && formations.length === 0">
+         <p>Aucune formation n'est disponible pour le moment.</p>
+     </section>
+     <!-- Afficher les détails de chaque formation dans un tableau -->
+     <div class="container mt-4">
+         <div class="row">
+             <div class="col">
+                 <div class="table-responsive">
+                     <table class="table table-bordered border-primary">
+                         <thead class="table-primary">
+                             <tr>
+             <th>Title</th>
+             <th>Description</th>
+             <th>Start Date</th>
+             <th>End Date</th>
+            
+             <th>Actions</th> <!-- Colonne pour les boutons d'action -->
+         </tr>
+         </thead>
+         <tbody>
+         <tr *ngFor="let formation of formations">
+             <td>{{ formation.titre }}</td>
+             <td>{{ formation.description }}</td>
+             <td>{{ formation.dateDebut }}</td>
+             <td>{{ formation.dateFin }}</td>
+            
+             <!-- Boutons d'action pour chaque formation -->
+             <td>
+                 <a   class="btn btn-outline-primary">
+                     <i class="fas fa-edit"></i> participate
+                 </a>
+                
+             </td>
+             
+         </tr>
+     </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+ </div>
+ </main>
+ 
