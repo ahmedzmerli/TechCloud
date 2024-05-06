@@ -42,7 +42,8 @@
 
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#commentModal" (click)="getComments(evenement.id)">Commentaires</button>
        
-          <button class="btn-delete" (click)="deleteEvenement(evenement.id)">Supprimer</button>
+          <button class="btn-delete" (click)="deleteEvenement(evenement.id)" (click)="sendMessage()">Supprimer</button>
+          
 
 
 
@@ -52,9 +53,16 @@
 
     </tbody>
   </table>
+
+ 
+
+  
   
   
 </div>
+
+
+
 
 
 
@@ -159,23 +167,30 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="modal-body">
-          <h4>Liste des commentaires</h4>
-          <ul *ngIf="comments.length > 0">
-            <li *ngFor="let comment of comments">
-               {{ comment.date_commentaire }}<br>
-              {{ comment.description }}
-            </li>
-          </ul>
-          <p *ngIf="comments.length === 0">Aucun commentaire pour cet événement.</p>
-        </div>
-        </div>
+        <h4>Liste des commentaires</h4>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let comment of comments">
+            <div class="d-flex justify-content-between">
+              <div class="comment-author">
+                 {{ comment.date_commentaire }}
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Répondre</button>
+            </div>
+            <div class="comment-content">
+              <p class="mt-2 bg-light border rounded p-3">{{ comment.description }}</p>
+            </div>
+          </li>
+        </ul>
+        <p *ngIf="comments.length === 0">Aucun commentaire pour cet événement.</p>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+
+
 
 
 <app-footer></app-footer>

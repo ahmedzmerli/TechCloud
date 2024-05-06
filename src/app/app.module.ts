@@ -19,6 +19,9 @@ import { HeaderFrontComponent } from './front/header-front/header-front.componen
 import { FooterFrontComponent } from './front/footer-front/footer-front.component';
 import { SliderFrontComponent } from './front/slider-front/slider-front.component';
 import { EvenementFrontComponent } from './front/evenement-front/evenement-front.component';
+import { NgChartsModule } from 'ng2-charts';
+import { StatsComponent } from './back/stats/stats.component';
+import { DetailsEvenementFrontComponent } from './front/details-evenement-front/details-evenement-front.component';
 
 
 
@@ -37,6 +40,8 @@ import { EvenementFrontComponent } from './front/evenement-front/evenement-front
     FooterFrontComponent,
     SliderFrontComponent,
     EvenementFrontComponent,
+    StatsComponent,
+    DetailsEvenementFrontComponent,
    
   ],
   imports: [
@@ -46,6 +51,7 @@ import { EvenementFrontComponent } from './front/evenement-front/evenement-front
     FormsModule,
     HttpClientModule,
     MatDialogModule,
+    NgChartsModule,
    
   ],
   providers: [HttpClient,EvenementService ],

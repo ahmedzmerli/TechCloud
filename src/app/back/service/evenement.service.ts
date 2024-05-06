@@ -25,7 +25,18 @@ export class EvenementService {
     return this.http.delete(BASIC_URL+"/evenements/Evenement/"+ id);
   }
   getCommentaires(id:number):Observable<any>{
-    return this.http.get(BASIC_URL+"/evenements/evenementId/commentaires"+ id);
+    return this.http.get(BASIC_URL+"/evenements/commentaires/"+ id);
+    // return this.http.get(BASIC_URL+"/evenements/",+`id`+"/commentaires/");
+    
   }
+  getParticipationStatistics(): Observable<any> {
+    return this.http.get<any>(BASIC_URL+"/evenements/stats");
+  }
+  SendSMS( ): Observable<any> {
+   
+    return this.http.get(BASIC_URL+"/evenements/sendSms")
+  }
+
+  
   
 }

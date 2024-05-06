@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators , ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvenementService } from '../service/evenement.service';
-import { Observable } from 'rxjs'; 
+import { Observable, forkJoin, map } from 'rxjs'; 
 import { MatDialog } from '@angular/material/dialog';
 import Fuse from 'fuse.js';
-
+import { Chart, ChartData, ChartType } from 'chart.js';
+import { HttpClient } from '@angular/common/http';
+import { EventStatistics } from '../Models/EventStatistics.model';
 @Component({
   selector: 'app-evenement',
   templateUrl: './evenement.component.html',
   styleUrls: ['./evenement.component.css']
 })
-export class EvenementComponent {
-
+export class EvenementComponent implements OnInit {
+  
   comments: any[] = []; 
   fuse!: Fuse<any>;
   updateEvenementForm!: FormGroup;
@@ -24,10 +26,6 @@ nom!:String;
   lieu!:String;
   date_deb!:Date;
   nbrPlace!:number;
-
-
-
-  
   id!:number ;
 
   
@@ -69,6 +67,7 @@ onSubmitAjout() {
 
 
 ngOnInit(){
+  // this.fetchEventStatistics();
 this.getALLEvenements();
 this.updateEvenementForm = this.formBuilder.group({
   nom:["", [Validators.required]],
@@ -91,7 +90,15 @@ this.updateEvenementForm = this.formBuilder.group({
     this.evenementss = res;
     this.fuse = new Fuse(res, {keys: ['nom','evenementss.nom']});
   });
+
+
+
+  
+  
 }
+
+
+
 
 
 getEvenementById(){
@@ -106,9 +113,21 @@ getALLEvenements(){
     this.evenementss=res;
   })
 }
+sendMessage():void {
+  this.evenementService.SendSMS().subscribe(
+    response => {
+     
+      console.log('Message sent', response);
+    },
+    error=>{
+      console.error('Error sending',error);
+    }
+  );
+}
 deleteEvenement(id:number){
   this.evenementService.deleteEvenement(id).subscribe((res)=>{
     console.log(res);
+    this.evenementService.SendSMS();
     this.getALLEvenements();
   })
 
@@ -164,6 +183,9 @@ getComments(id: number) {
     this.comments = res;
   });
 }
+
+
+
 
 
 

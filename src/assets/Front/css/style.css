@@ -605,8 +605,8 @@ a:focus {
 /*team section */
 .team_section {
   text-align: center;
-  background-color: #00204a;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #00204a;
 }
 
 .team_section .heading_container {

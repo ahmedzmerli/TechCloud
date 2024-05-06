@@ -7,6 +7,8 @@ import { DetailEvenementComponent } from './back/detail-evenement/detail-eveneme
 import { EvenementFrontComponent } from './front/evenement-front/evenement-front.component';
 import { FooterComponent } from './back/footer/footer.component';
 import { FooterFrontComponent } from './front/footer-front/footer-front.component';
+import { StatsComponent } from './back/stats/stats.component';
+import { DetailsEvenementFrontComponent } from './front/details-evenement-front/details-evenement-front.component';
 
 
 
@@ -39,6 +41,14 @@ const routes: Routes = [
   {
     path:"detailEvenement/:id",
     component:DetailEvenementComponent,
+  },
+  {
+    path:"stats",
+    component:StatsComponent,
+  },
+  {
+    path:"Evenement/:id",
+    component:DetailsEvenementFrontComponent,
   }
    
 
