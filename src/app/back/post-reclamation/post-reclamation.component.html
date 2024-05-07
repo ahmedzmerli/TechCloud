@@ -1,0 +1,29 @@
+<div class="container-fluid pt-4">
+  <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-8 col-lg-6">
+          <div class="bg-light rounded p-4">
+              <h6 class="mb-4 text-center">Ajouter une Réclamation</h6>
+              <form (ngSubmit)="addReclamation()">
+                  <div class="mb-3">
+                      <label for="description" class="form-label">Description</label>
+                      <input type="text" class="form-control" id="description" [(ngModel)]="reclamation.description" name="description" required>
+                  </div>
+              
+                  <div class="mb-3">
+                      <label for="emailrec" class="form-label">Adresse Email</label>
+                      <input type="email" class="form-control" id="emailrec" [(ngModel)]="reclamation.emailrec" name="emailrec" required>
+                  </div>
+              
+                  <div class="mb-3">
+                      <label for="objet" class="form-label">Objet</label>
+                      <input type="text" class="form-control" id="objet" [(ngModel)]="reclamation.objet" name="objet" required>
+                  </div>
+              
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-primary" style="background-color: #0f054c; border-color: #0f054c;">Ajouter</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

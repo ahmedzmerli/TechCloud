@@ -1,0 +1,62 @@
+
+<br>
+<br>
+<!-- app-reclamation.component.html -->
+<div style="height: calc(100vh - 250px); overflow-y: auto; margin-top: -20px; padding-top: 0;">
+    <h3 style="color: #333; padding-left: 10px;">Liste Réclamations</h3>
+    <div class="parent">
+        <table class="table table-bordered table-hover" style="background-color: #F0F8FF;">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reclamation of reclamationss" (click)="selectReclamation(reclamation)" style="background-color: #F8F9FA;">
+                    <td>{{reclamation.description}}</td>
+                    <td>{{reclamation.datesoumission | date:'medium'}}</td>
+                    <td>{{reclamation.statut}}</td>
+                    <td>{{reclamation.emailrec}}</td>
+                    <td>
+                        <button *ngIf="reclamation.statut !== 'traite'" class="btn btn-primary" (click)="openReplyModal(reclamation.idrec)">Reply</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Formulaire modal pour ajouter une réponse -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="replyModalLabel">Reply to Reclamation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="submitReply()" #replyForm="ngForm">
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" id="description" name="description" class="form-control" [(ngModel)]="replyDescription" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="datereponse" class="form-label">Date</label>
+                        <input type="date" id="datereponse" name="datereponse" class="form-control" [(ngModel)]="datereponse" required>
+                    </div>
+                    <!-- Ajoutez d'autres champs au besoin -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

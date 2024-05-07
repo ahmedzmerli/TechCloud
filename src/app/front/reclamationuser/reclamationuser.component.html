@@ -1,0 +1,75 @@
+
+<div class="content">
+<div class="parent">
+    <div class="row mb-4"> <!-- Ajout de la classe mb-4 pour une marge en bas -->
+        <div class="col-md-12 text-center">
+            <a href="/front/add" class="btn btn-primary" style="background-color: #0f054c; border-color: #0f054c;">Ajouter une réclamation</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let reclamation of reclamations">
+            <div class="card border-primary" style="background-color: white; border-color: #05021b;">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold" style="color: #0f054c;">{{ reclamation.objet }}</h5>
+                    <p class="card-text">{{ reclamation.description }}</p>
+                    <p class="card-text">Date: {{ reclamation.datesoumission }}</p>
+                    <p class="card-text">
+                        Statut: 
+                        <span [ngClass]="{ 'text-danger': reclamation.statut === 'enAttente', 'text-success': reclamation.statut === 'traite' }">
+                            {{ reclamation.statut }}
+                            <span *ngIf="reclamation.statut === 'traite'" class="fa fa-check-circle text-success"></span>
+                        </span>
+                    </p>
+                    <p class="card-text">Email: {{ reclamation.emailrec }}</p>
+                </div>
+                <div class="card-footer" style="background-color: white;">
+                    <button class="btn btn-primary me-2"  style="background-color: #0f054c; border-color: #0f054c;" (click)="deleteReclamation(reclamation.idrec)">Supprimer</button>
+                    <button class="btn btn-primary" [disabled]="reclamation.statut === 'traite'" style="background-color: #0f054c; border-color: #0f054c;" (click)="openEditReclamationModal(reclamation.idrec)">Modifier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+  
+    
+    
+
+      <div class="modal fade" id="editReclamationModal" tabindex="-1" aria-labelledby="editReclamationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editReclamationModalLabel">Edit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your participation form content here -->
+                    <form (ngSubmit)="editReclamation()" class="row">
+                        
+                        <div class="col-md-12"> <!-- Cette division permet de placer le bouton de soumission sur une ligne différente -->
+                           
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" [(ngModel)]="selectedReclamation && selectedReclamation.description" name="description" class="form-control" placeholder="Description" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="objet" class="form-label">Objet</label>
+                                <input type="text" [(ngModel)]="selectedReclamation && selectedReclamation.objet" name="objet" class="form-control" placeholder="objet" required>
+                                </div>
+                            <div class="mb-3">
+                                <label for="emailrec" class="form-label">Email</label>
+                                <input type="text" [(ngModel)]="selectedReclamation && selectedReclamation.emailrec" name="emailrec" class="form-control" placeholder="email" required>
+                            </div>
+                            <!-- Ajoutez plus de champs au besoin -->
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary" style="background-color: #0f054c; border-color: #0f054c;">Submit</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
