@@ -1,0 +1,44 @@
+<header>
+    <a routerLink="/commentaire/add-commentaire" class="btn action-btn add-btn">ajouter</a>
+ </header>
+ <main>
+     <!-- Vérifier s'il y a des formations disponibles -->
+     <section *ngIf="Commentaires && Commentaires.length === 0">
+         <p>Aucune Commentaire n'est disponible pour le moment.</p>
+     </section>
+     <!-- Afficher les détails de chaque formation dans un tableau -->
+     <table *ngIf="Commentaires && Commentaires.length > 0">
+         <thead>
+         <tr>
+            <th>contenu</th>
+            <th>reacts</th>
+            <th>Utilisateur</th>
+            <th>post</th>
+            <th> datePublication </th>
+            <th>Actions</th> 
+         </tr>
+         </thead>
+         <tbody>
+         <tr *ngFor="let Commentaire of Commentaires">
+             <td>{{ Commentaire.contenu }}</td>
+             <td>{{ Commentaire.reacts?.id }}</td>
+             <td>{{ Commentaire.user?.nom }}</td>
+             <td>{{Commentaire.post?.titre}}</td>
+             <td>{{Commentaire.datePublication}}</td>
+             
+ 
+             <!-- Boutons d'action pour chaque formation -->
+             <td>
+                
+                 <button type="button" [routerLink]="'/commentaire/update-commentaire/' + Commentaire.id" class="btn btn-outline-info me-2"data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button type="button" [routerLink]="'/commentaire/delete-commentaire/' + Commentaire.id" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                    <i class="fas fa-trash-alt"></i> delete 
+                </button>
+             </td>
+         </tr>
+         </tbody>
+     </table>
+ </main>
+ 

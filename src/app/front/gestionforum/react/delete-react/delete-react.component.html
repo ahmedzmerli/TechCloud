@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Delete react</h2>
+    <p>Are you sure you want to delete the following react?</p>
+    
+    <div *ngIf="react">
+      <p><strong>id: </strong>{{ react.id }}</p>
+      
+    </div>
+    <form action="#" th:action="@{'/react/deletereact/' + ${react.id}}" method="post" (ngSubmit)="confirmDelete()" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="id" th:value="${react.id}" />
+    <button type="submit" class="btn btn-primary btn-submit">delete</button>
+    <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/react/all-react">Cancel</button>
+</form>
+  </div>

@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Delete commentaire</h2>
+    <p>Are you sure you want to delete the following commentaire?</p>
+    
+    <div *ngIf="commentaire">
+      <p><strong>contenu: </strong>{{ commentaire.contenu }}</p>
+      
+    </div>
+    <form action="#" th:action="@{'/commentaire/deletecommentaire/' + ${commentaire.id}}" method="post" (ngSubmit)="confirmDelete()" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="id" th:value="${commentaire.id}" />
+    <button type="submit" class="btn btn-primary btn-submit">delete</button>
+    <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/commentaire/all-commentaire">Cancel</button>
+</form>
+  </div>

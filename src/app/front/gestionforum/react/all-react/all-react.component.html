@@ -1,0 +1,36 @@
+<header>
+    <a routerLink="/react/add-react" class="btn action-btn add-btn">Ajouter</a>
+</header>
+<main>
+    <!-- Vérifier s'il y a des réactions disponibles -->
+    <section *ngIf="Reacts && Reacts.length === 0">
+        <p>Aucune Réaction n'est disponible pour le moment.</p>
+    </section>
+    <!-- Afficher les détails de chaque réaction dans un tableau -->
+    <table *ngIf="Reacts && Reacts.length > 0">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Commentaire</th>
+                <th>Post</th>
+                <th>Type de Réaction</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let react of Reacts">
+                <td>{{ react.date }}</td>
+                <td>{{ react.user?.nom }}</td>
+                <td>{{ react.commentaire?.id }}</td>
+                <td>{{ react.post?.id }}</td>
+                <td>{{ react.typeReact }}</td>
+                <!-- Boutons d'action pour chaque réaction -->
+                <td>
+                    <a [routerLink]="'/react/update-react/' + react.id" class="btn action-btn edit-btn">Modifier</a>
+                    <a [routerLink]="'/react/delete-react/' + react.id" class="btn action-btn delete-btn">Supprimer</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</main>

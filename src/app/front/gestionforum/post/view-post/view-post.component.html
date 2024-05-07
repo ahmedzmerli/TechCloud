@@ -1,0 +1,51 @@
+<!-- <p>view-post works!</p>   -->
+<div *ngIf="postData" class="card-container">
+    <mat-card>
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{ postData.titre }}</mat-card-title>
+            <mat-card-subtitle>Posted by: {{ postData.utilisateur }} | Posted On: {{ postData.date | date:'medium' }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="postData.imageUrl" height="25%" class="img" alt="Card Image" />
+
+        <mat-card-content>
+            {{ postData.contenu }}
+        </mat-card-content>
+        <br>
+        <mat-chip-set>
+            <mat-chip *ngFor="let tag of postData.tags">{{ tag }}</mat-chip>
+        </mat-chip-set>
+        <mat-card-actions>
+            <button class="btn btn-outline-primary" (click)="likePost(postData.id)">{{ postData.likeCount }}
+                <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon> like
+            </button>
+            <button class="btn btn-outline-primary" style="margin-left: 5px;" (click)="goToCommentPage()">Add Comment</button>
+            <button class="btn btn-outline-danger"  routerLink="/react/add-react">React</button>
+        </mat-card-actions>
+    </mat-card>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/post/all-post">Return</button>
+     </div>
+</div>
+
+<mat-card class="comment-card">
+    <mat-card-content>
+        <h4>Comments</h4>
+        <div *ngFor="let commentaire of commentaires">
+            <p>{{ commentaire.contenu }}</p>
+            <!-- Add other comment details here -->
+            
+           
+        </div>
+        <button  type="button" class="btn btn-outline-primary" (click)="getCommentairesForPost()"data-bs-toggle="modal" data-bs-target="#exampleModal3">Show Comments</button>
+      
+        <button type="button" routerLink="/post/update-post/:id" class="btn btn-outline-info me-2"data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+            <i class="fas fa-edit"></i> Edit
+        </button>
+        <button type="button"  routerLink="/post/delete-post/:id" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            <i class="fas fa-trash-alt"></i> delete 
+        </button>
+        
+    </mat-card-content>
+    
+</mat-card>

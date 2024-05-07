@@ -1,0 +1,63 @@
+<div class="container">
+    <h2 class="mb-4">Add React</h2>
+    <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+    <form [formGroup]="reactForm" (ngSubmit)="updateReact()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="date">date</label>
+                    <input type="date" class="form-control" id="date" formControlName="date">
+                    <div *ngIf="reactForm.get('date')?.invalid && (reactForm.get('date')?.dirty || reactForm.get('date')?.touched)" class="text-danger">
+                        <div *ngIf="isFieldInvalid('date')" class="text-danger">Date  est requise.</div>
+                            <div *ngIf="reactForm.get('date')?.errors?.['required']">Date est requise.</div>
+                            <div *ngIf="reactForm.get('date')?.errors?.['pastOrPresent']">Date  doit être dans le passé ou le présent.</div>
+                    </div>
+                </div>
+     
+                
+            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="post">post</label>
+                        <select multiple class="form-control" id="post" formControlName="post">
+                            
+                          </select>
+                    </div>
+                <div class="form-group">
+                    <label for="react">User</label>
+                    <select multiple class="form-control" id="react" formControlName="user">
+                        <!-- Boucle sur les options des participants ici -->
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="react">commentaire</label>
+                        <select multiple class="form-control" id="react" formControlName="commentaire">
+                            
+                          </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="react">typeReact</label>
+                        <select class="form-control" formControlName="typeReact">
+                            <option value="LIKE">Like</option>
+                            <option value="LOVE">Love</option>
+                            <option value="ANGRY">Angry</option>
+                            <option value="SAD">Sad</option>
+                          </select>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Ajouter le reste de vos champs de formulaire ici -->
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/react/all-react">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+    <h2 class="mb-4">Add Commentaire</h2>
+    <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+    <form [formGroup]="commentaireForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="datePublication">date Publication</label>
+                    <input type="date" class="form-control" id="datePublication" formControlName="datePublication">
+                    <div *ngIf="commentaireForm.get('datePublication')?.invalid && (commentaireForm.get('datePublication')?.dirty || commentaireForm.get('datePublication')?.touched)" class="text-danger">
+                        <div *ngIf="isFieldInvalid('datePublication')" class="text-danger">Date de Délivrance est requise.</div>
+                            <div *ngIf="commentaireForm.get('datePublication')?.errors?.['required']">Date de Délivrance est requise.</div>
+                            <div *ngIf="commentaireForm.get('datePublication')?.errors?.['pastOrPresent']">Date de Délivrance doit être dans le passé ou le présent.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contenu">contenu</label>
+                    <input type="text" class="form-control" id="contenu" formControlName="contenu">
+                    <div *ngIf="commentaireForm.get('contenu')?.invalid && (commentaireForm.get('contenu')?.dirty || commentaireForm.get('contenu')?.touched)" class="text-danger">
+                        <div *ngIf="commentaireForm.get('contenu')?.errors?.['required']">La description est requis.</div>
+                        <div *ngIf="commentaireForm.get('contenu')?.errors?.['maxlength']">La description ne peut pas dépasser 10 caractères.</div>
+                        <div *ngIf="commentaireForm.get('contenu')?.errors?.['pattern']">La description ne peut contenir que des lettres.</div>
+                       </div>
+                </div>
+                
+               
+                
+            </div>
+                <div class="col-md-6">
+                    
+                <div class="form-group">
+                    <label for="user">User</label>
+                    <select multiple class="form-control" id="user" formControlName="user">
+                        <!-- Boucle sur les options des participants ici -->
+                    </select>
+                </div>
+               
+                
+            </div>
+            
+            <!-- Ajouter le reste de vos champs de formulaire ici -->
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/commentaire/all-commentaire">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

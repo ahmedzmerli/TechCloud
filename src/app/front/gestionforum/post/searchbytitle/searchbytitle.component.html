@@ -1,0 +1,54 @@
+<div class="search-form">
+    <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Enter Keyword to search</mat-label>
+        <input matInput [(ngModel)]="titre" name="searchInput">
+        <button mat-button matSuffix color="primary" (click)="searchPostBytitle()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+
+<div class="empty" *ngIf="result.length === 0">
+    <mat-icon class="icon">no_sim</mat-icon>
+    <br>
+    <span>Nothing to see here.</span>
+</div>
+
+<div class="card-container">
+    <mat-card *ngFor="let post of result">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{ post.titre }}</mat-card-title>
+            <mat-card-subtitle>Posté par : {{ post.user?.nom }} | Posté le : {{ post.date | date:'medium' }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="post.imageUrl" height="35%" class="img" alt="Card Image" />
+        <mat-card-content>
+            {{ post.contenu }}
+        </mat-card-content>
+        <br>
+        <mat-chip-set>
+            <mat-chip *ngFor="let tag of post.tags">{{ tag }}</mat-chip>
+        </mat-chip-set>
+    
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="likePost(post.id)">
+                {{ post.likeCount }} <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon> J'aime
+            </button>
+            <button mat-raised-button color="primary" style="margin-left: 5px;" routerLink="/post/view-post/{{post.id}}">View Post </button>
+            
+           
+            <td>
+                <button type="button" routerLink="/post/update-post/{{ post.id }}" class="btn btn-outline-info me-2"data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button type="button" routerLink="/post/delete-post/{{ post.id }}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                    <i class="fas fa-trash-alt"></i> delete 
+                </button>
+                
+            </td>
+        </mat-card-actions>
+    </mat-card>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-outline-primary btn-cancel" routerLink="/post/all-post">return</button>
+    </div>
+</div>

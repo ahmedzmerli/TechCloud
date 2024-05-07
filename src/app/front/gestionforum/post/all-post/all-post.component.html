@@ -1,0 +1,47 @@
+
+<div class="content">
+    <!-- Vérifier s'il y a des postes disponibles -->
+    <section *ngIf="Posts && Posts.length === 0">
+        <p>Aucun post n'est disponible pour le moment.</p>
+    </section>
+    <mat-card >
+    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <a routerLink="/post/add-post" class="btn action-btn add-btn"><i class="far fa-file-alt"></i> Add post</a>
+        <a routerLink="/post/searchbytitle" class="btn btn-outline-primary"><i class="far fa-file-alt"></i> search</a>
+        <a routerLink="/post/stat" class="btn action-btn add-btn"><i class="far fa-file-alt"></i> statistcs</a></div></mat-card>
+</div>
+    <!-- Afficher les détails de chaque post -->
+    <div *ngIf="Posts && Posts.length > 0" class="card-container">
+        <mat-card *ngFor="let post of Posts">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{ post.titre }}</mat-card-title>
+                <mat-card-subtitle>Posté par : {{ post.user?.nom }} | Posté le : {{ post.date | date:'medium' }}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image [src]="post.imageUrl" height="35%" class="img" alt="Card Image" />
+            <mat-card-content>
+                {{ post.contenu }}
+            </mat-card-content>
+            <br>
+            <mat-chip-set>
+                <mat-chip *ngFor="let tag of post.tags">{{ tag }}</mat-chip>
+            </mat-chip-set>
+        
+            <mat-card-actions>
+                <button class="btn btn-outline-primary" (click)="likePost(post.id)">
+                    {{ post.likeCount }} <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon> J'aime
+                </button>
+                <button class="btn btn-outline-danger" style="margin-left: 5px;" routerLink="/post/view-post/{{post.id}}">View Post </button>
+                <td>
+                    <button type="button" routerLink="/post/update-post/{{ post.id }}" class="btn btn-outline-info me-2"data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" routerLink="/post/delete-post/{{ post.id }}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        <i class="fas fa-trash-alt"></i> delete 
+                    </button>
+                    
+                </td>
+            </mat-card-actions>
+        </mat-card>
+       
+</div>
