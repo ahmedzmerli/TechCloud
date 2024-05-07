@@ -4,15 +4,28 @@
 
 <div class="content">
 
-  <!-- Assuming this is your component.html file -->
-<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-  <h5 class="m-0">Manage Files</h5>
-  <span class="block mt-2 md:mt-0 p-input-icon-left">
-    <i class="pi pi-search"></i>
-    <input pInputText type="text" [(ngModel)]="searchTerm" (input)="searchEvent()" placeholder="Search..." class="w-full sm:w-auto" />
-  </span>
+<div class="tchech" >
+  <div>
+    <h5 class="m-0">Cherchez un evenement</h5>
+  <br>
+    <span class="block mt-2 md:mt-0 p-input-icon-left">
+      <i class="pi pi-search"></i>
+      
+      
+        <div class="input-group">
+          <input class="form-control border-primary" placeholder="Search" pInputText type="text" [(ngModel)]="searchTerm" (input)="searchEvent()">
+          
+        </div>
+      
+      <!-- <input  class="form-control border-0"  pInputText type="text" [(ngModel)]="searchTerm" (input)="searchEvent()" placeholder="Search..." class="w-full sm:w-auto" /> -->
+    </span>
+   
+  </div>
+ 
 </div>
-
+<button type="button" class="btn tchech btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="openDialogAjout()">
+  Ajouter
+</button>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -21,6 +34,7 @@
         <th scope="col">Nombre de place</th>
         <th scope="col">Date de début</th>
         <th scope="col">Lieu</th>
+        <th scope="col">Image</th>
         <th scope="col">Actions</th>
 
       </tr>
@@ -32,20 +46,18 @@
         <td>{{evenement.nbrPlace}}</td>
         <td>{{evenement.date_deb}}</td>
         <td>{{evenement.lieu}}</td>
+        <td><img src={{evenement.image}} alt="" class="img-fluid" style="width: 100%;  max-width: 600px; max-height: 500px;"> </td>
+
         <td>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="openDialog(evenement)">
-            Ajouter
-         </button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="openDialog(evenement)">
+          
+          <button type="button" class="btn tchech btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="openDialog(evenement)">
            Modifier
         </button>
 
-        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#commentModal" (click)="getComments(evenement.id)">Commentaires</button>
+        <button type="button" class="btn tchech btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal" (click)="getComments(evenement.id)">Commentaires</button>
        
-          <button class="btn-delete" (click)="deleteEvenement(evenement.id)" (click)="sendMessage()">Supprimer</button>
+          <button type="button" class="btn tchech btn-danger" (click)="deleteEvenement(evenement.id)" >Supprimer</button>
           
-
-
 
         </td>
       </tr>
@@ -53,6 +65,7 @@
 
     </tbody>
   </table>
+  
 
  
 
@@ -83,19 +96,24 @@
             <div class="form-group">
                 <label for="nom">nom:</label>
                 <input type="text" class="form-control" name="nom" id="nom" required formControlName="nom" placeholder={{nom}} >
+                <div *ngIf="postEvenementForm.get('nom')?.invalid && postEvenementForm.get('nom')?.touched" class="text-danger">The field is required.</div>
             </div>
             <div class="form-group">
                 <label for="nbrPlace">Nombre de place:</label>
                 <input type="number" class="form-control" name="nbrPlace" id="nbrPlace" required formControlName="nbrPlace" placeholder={{nbrPlace}}>
+                <div *ngIf="postEvenementForm.get('nbrPlace')?.invalid && postEvenementForm.get('nbrPlace')?.touched" class="text-danger">The field is required.</div>
             </div>
             <div class="form-group">
                 <label for="date_deb">Date de début:</label>
                 <input type="date" class="form-control"name="date_deb" id="date_deb" required formControlName="date_deb" placeholder={{date_deb}}>
+                <div *ngIf="postEvenementForm.get('date_deb')?.invalid && postEvenementForm.get('date_deb')?.touched" class="text-danger">The field is required.</div>
+                <div *ngIf="postEvenementForm.get('date_deb')?.errors?.['startDateInvalid'] && postEvenementForm.get('date_deb')?.touched" class="text-danger">The start date cannot be earlier than the current date.</div>
             </div>
            
             <div class="form-group">
                 <label for="lieu">lieu:</label>
                 <input type="text" class="form-control" name="lieu" id="lieu" required formControlName="lieu" placeholder={{lieu}}>
+                <div *ngIf="postEvenementForm.get('lieu')?.invalid && postEvenementForm.get('lieu')?.touched" class="text-danger">The field is required.</div>
             </div>
             
        
@@ -126,30 +144,40 @@
       <div class="modal-body">
         <form [formGroup]="postEvenementForm" (ngSubmit)="onSubmitAjout()" >
           <div class="bg-light rounded h-100 p-4">
-            <h6 class="mb-4">Modifer cet événement</h6>
+            <h6 class="mb-4">Ajouter un événement</h6>
 
             
             <div class="form-group">
                 <label for="nom">nom:</label>
                 <input type="text" class="form-control" name="nom" id="nom" required formControlName="nom" >
+                <div *ngIf="postEvenementForm.get('nom')?.invalid && postEvenementForm.get('nom')?.touched" class="text-danger">The field is required.</div>
             </div>
             <div class="form-group">
                 <label for="nbrPlace">Nombre de place:</label>
                 <input type="number" class="form-control" name="nbrPlace" id="nbrPlace" required formControlName="nbrPlace" >
+                <div *ngIf="postEvenementForm.get('nbrPlace')?.invalid && postEvenementForm.get('nbrPlace')?.touched" class="text-danger">The field is required.</div>
             </div>
             <div class="form-group">
                 <label for="date_deb">Date de début:</label>
                 <input type="date" class="form-control"name="date_deb" id="date_deb" required formControlName="date_deb">
+                <div *ngIf="postEvenementForm.get('date_deb')?.invalid && postEvenementForm.get('date_deb')?.touched" class="text-danger">The field is required.</div>
+                <div *ngIf="postEvenementForm.get('date_deb')?.errors?.['startDateInvalid'] && postEvenementForm.get('date_deb')?.touched" class="text-danger">The start date cannot be earlier than the current date.</div>
             </div>
            
             <div class="form-group">
                 <label for="lieu">lieu:</label>
                 <input type="text" class="form-control" name="lieu" id="lieu" required formControlName="lieu" >
+                <div *ngIf="postEvenementForm.get('lieu')?.invalid && postEvenementForm.get('lieu')?.touched" class="text-danger">The field is required.</div>
             </div>
+            <div class="form-group">
+              <label for="image">image:</label>
+              <input type="file" (change)="onFileSelected($event)" class="form-control" name="image" id="image" required formControlName="image" >
+              <div *ngIf="postEvenementForm.get('image')?.invalid && postEvenementForm.get('image')?.touched" class="text-danger">The field is required.</div>
+              </div>
             
        
         </div>
-          <button type="submit" class="btn btn-primary" (click)="postEvenement()">Ajouter</button>
+          <button type="submit" class="btn btn-primary" (click)="ajoutEvenement()">Ajouter</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -193,4 +221,3 @@
 
 
 
-<app-footer></app-footer>

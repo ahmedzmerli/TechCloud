@@ -23,15 +23,6 @@ export class PostEvenementComponent {
 
     })
   }
-  postEvenement(){
-    console.log(this.postEvenementForm.value);
-    this.evenementService.postEvenement(this.postEvenementForm.value).subscribe((res:any)=>{
-      console.log("success")
-
-    },error=>{
-      console.log(error)
-    })
-    this.router.navigateByUrl("/back/evenements")
-  }
+ 
 
 }

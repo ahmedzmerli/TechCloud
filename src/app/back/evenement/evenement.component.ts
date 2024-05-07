@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators , ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvenementService } from '../service/evenement.service';
 import { Observable, forkJoin, map } from 'rxjs'; 
 import { MatDialog } from '@angular/material/dialog';
 import Fuse from 'fuse.js';
 import { Chart, ChartData, ChartType } from 'chart.js';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventStatistics } from '../Models/EventStatistics.model';
+import { Evenement } from '../Models/evenement';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-evenement',
   templateUrl: './evenement.component.html',
   styleUrls: ['./evenement.component.css']
 })
 export class EvenementComponent implements OnInit {
-  
+ 
+  file!: File;
   comments: any[] = []; 
   fuse!: Fuse<any>;
   updateEvenementForm!: FormGroup;
@@ -57,11 +60,26 @@ onSubmitAjout() {
   }
   //True if all the fields are filled
   if(this.submitted){
-    this.postEvenement();
-  
+    this.ajoutEvenement();
   }
-
- 
+}
+ajoutEvenement(){
+  console.log(this.postEvenementForm.value);
+    this.evenementService.postEvenement(this.postEvenementForm.value , this.file).subscribe(
+      () => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Event added Successfully !',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.getALLEvenements();
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error adding event:', error);
+      }
+    );
 }
 
 
@@ -79,24 +97,25 @@ this.updateEvenementForm = this.formBuilder.group({
   this.postEvenementForm=this.formBuilder.group({
     nom:["", [Validators.required]],
     nbrPlace:["",[Validators.required]],
-    date_deb:["",[Validators.required]],
+    date_deb: ['', [Validators.required, this.validateStartDate.bind(this)]],
     date_fin:["",[Validators.required]],
     lieu:["",[Validators.required]],
-
+    image:["",[Validators.required]],
   })
-  this.getEvenementById();
+  
 
   this.evenementService.getAllEvenement().subscribe((res) => {
     this.evenementss = res;
     this.fuse = new Fuse(res, {keys: ['nom','evenementss.nom']});
   });
 
-
-
-  
-  
 }
 
+validateStartDate(control: AbstractControl): ValidationErrors | null {
+  const startDate = new Date(control.value);
+  const today = new Date();
+  return startDate >= today ? null : { startDateInvalid: true };
+}
 
 
 
@@ -125,11 +144,25 @@ sendMessage():void {
   );
 }
 deleteEvenement(id:number){
-  this.evenementService.deleteEvenement(id).subscribe((res)=>{
-    console.log(res);
-    this.evenementService.SendSMS();
-    this.getALLEvenements();
-  })
+  this.evenementService.deleteEvenement(id).subscribe(
+    () => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Suppression terminée!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.getALLEvenements();
+    },
+    (error: HttpErrorResponse) => {
+      console.error('Error adding event:', error);
+    }
+  );
+    // console.log(res);
+    // this.evenementService.SendSMS();
+    // this.getALLEvenements();
+  
 
 }
 detailEvenement(id:number){
@@ -151,15 +184,13 @@ openDialog(evenement:any): void {
   this.lieu = evenement.lieu;
   this.id=evenement.id
 }
-postEvenement(){
-  console.log(this.postEvenementForm.value);
-  this.evenementService.postEvenement(this.postEvenementForm.value).subscribe((res:any)=>{
-    console.log("success")
 
-  },error=>{
-    console.log(error)
-  })
-  window.location.reload();
+openDialogAjout(){
+  this.submitted=true;
+}
+
+postEvenement() {
+  
 }
 
 searchEvent() {
@@ -182,6 +213,13 @@ getComments(id: number) {
   this.evenementService.getCommentaires(id).subscribe((res) => {
     this.comments = res;
   });
+}
+onFileSelected($event: Event) {
+  const target = event!.target as HTMLInputElement;
+      const files = target.files as FileList;
+      this.file = files[0];
+      console.log("file name " + this.file.name);
+  
 }
 
 

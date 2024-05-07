@@ -3,13 +3,13 @@
 <section class="events" style="padding: 5em;">
   <div class="container">
     <div class="text-center" style="padding-bottom: 4em;">
-      <h1 style=" font-weight: 700;">Bootstrap card tiled layout</h1>
+      <h1 style=" font-weight: 700;">Liste des evenements</h1>
       
     </div>
     <div class="card-columns">
       <div class="card" *ngFor="let evenement of evenementss" [style.boxShadow]="'0 4px 8px 0 rgba(0, 0, 0, 0.2); transition: 0.3s; border: none;'">
-        <a href="#" style="color: initial;">
-          <img class="card-img-top" [src]="evenement.imageUrl" alt="Event Image">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal" (click)="getComments(evenement.id)" style="color: initial;">
+          <img class="card-img-top" src={{evenement.image}} alt="" class="img-fluid" style="width: 100%;  max-width: 600px; max-height: 500px;" alt="Event Image">
           <div class="card-body">
             <h5 class="card-title">{{ evenement.nom }}</h5>
             <p class="card-text">{{ evenement.description }}</p> <p class="card-text"><small class="text-muted">
@@ -27,6 +27,66 @@
     </div>
     
   </div>
+
+
+
+
+  <!-- Modal Commentaires -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-info" id="commentModalLabel">Commentaires</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Liste des commentaires</h4>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let comment of comments">
+            <div class="d-flex justify-content-between">
+              <div class="comment-author">
+                 {{ comment.date_commentaire }}
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Répondre</button>
+            </div>
+            <div class="comment-content">
+              <p class="mt-2 bg-light border rounded p-3">{{ comment.description }}</p>
+            </div>
+          </li>
+        </ul>
+        <p *ngIf="comments.length === 0">Aucun commentaire pour cet événement.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3" (click)="openDialogComment()">
+          Commenter
+       </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal AJOUT COMMENT -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal1Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="exampleModal1Label">Ajouter un commentaire</h5>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="3" placeholder="Entrez votre commentaire ici..." [(ngModel)]="contenuCommentaire"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="ajouterCommentaire(contenuCommentaire)"(click)="sendMessage()" >Soumettre</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <app-footer-front></app-footer-front>
